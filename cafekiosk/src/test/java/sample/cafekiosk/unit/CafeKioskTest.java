@@ -1,6 +1,8 @@
 package sample.cafekiosk.unit;
 
 import static org.assertj.core.api.Assertions.*;
+
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import sample.cafekiosk.unit.beverage.Americano;
 import sample.cafekiosk.unit.beverage.Latte;
@@ -21,6 +23,7 @@ class CafeKioskTest {
     }
 
     @Test
+    @DisplayName("음료 1개를 추가하면 주문 목록에 담긴다.") // 명사의 나열보다는 문장으로 -> A이면 B이다.
     void add() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         cafeKiosk.add(new Americano());
@@ -77,7 +80,9 @@ class CafeKioskTest {
     }
 
     @Test
+    @DisplayName("주문 목록에 담긴 상품들의 총 금액을 계산할 수 있다.")
     void calculateTotalPrice() {
+        // given
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
         Latte latte = new Latte();
@@ -85,7 +90,10 @@ class CafeKioskTest {
         cafeKiosk.add(americano);
         cafeKiosk.add(latte);
 
+        // when
         int totalPrice = cafeKiosk.calculateTotalPrice();
+
+        // then
         assertThat(totalPrice).isEqualTo(8500);
     }
 
@@ -102,6 +110,7 @@ class CafeKioskTest {
     }
 
     @Test // 영업시간이 아닌 시간에 주문 예외 테스트
+    @DisplayName("영업 시작 시간 이전에는 주문을 생성할 수 없다.") // 도메인 용어를 사용하여 한층 추상화된 내용을 담기
     void createOrderWithOutsideOpenTime() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
