@@ -3,18 +3,16 @@ package sample.cafekiosk.spring.api.controller.order;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import sample.cafekiosk.spring.api.service.order.OrderService;
-import sample.cafekiosk.spring.api.service.order.request.OrderCreateRequest;
+import sample.cafekiosk.spring.api.service.order.request.OrderCreateServiceRequest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -38,7 +36,7 @@ class OrderControllerTest {
     @DisplayName("신규 주문을 등록한다.")
     void getSellingProducts() throws Exception {
         // given
-        OrderCreateRequest request = OrderCreateRequest.builder()
+        OrderCreateServiceRequest request = OrderCreateServiceRequest.builder()
                         .productNumbers(List.of("001"))
                                 .build();
 
@@ -59,7 +57,7 @@ class OrderControllerTest {
     @DisplayName("신규 주문을 등록할 때 상품번호는 1개 이상이어야 한다.")
     void createOrderWithEmptyProductNumbers() throws Exception {
         // given
-        OrderCreateRequest request = OrderCreateRequest.builder()
+        OrderCreateServiceRequest request = OrderCreateServiceRequest.builder()
                 .productNumbers(List.of())
                 .build();
 
