@@ -19,6 +19,7 @@ public class ProductCreateRequest {
     @NotNull(message = "상품 판매상태는 필수입니다.")
     private final ProductSellingStatus sellingStatus;
 
+    // String name -> 상품 이름은 20자 제한 (복잡한 비즈니스 규칙 적용은 Service Layer에서 검증하는 것이 좋다)
     @NotBlank(message = "상품 이름은 필수입니다.")
     private final String name;
 
