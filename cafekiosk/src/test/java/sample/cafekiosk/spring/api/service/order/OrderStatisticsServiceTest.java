@@ -6,9 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import sample.cafekiosk.spring.client.mail.MailSendClient;
+import sample.cafekiosk.spring.IntegrationTestSupport;
 import sample.cafekiosk.spring.domain.mail.MailSendHistory;
 import sample.cafekiosk.spring.domain.mail.MailSendHistoryRepository;
 import sample.cafekiosk.spring.domain.order.Order;
@@ -27,8 +25,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static sample.cafekiosk.spring.domain.product.ProductType.*;
 
-@SpringBootTest
-class OrderStatisticsServiceTest {
+class OrderStatisticsServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private OrderStatisticsService orderStatisticsService;
@@ -45,8 +42,7 @@ class OrderStatisticsServiceTest {
     @Autowired
     private MailSendHistoryRepository mailSendHistoryRepository;
 
-    @MockBean
-    private MailSendClient mailSendClient;
+
 
     @AfterEach
     void tearDown() {
@@ -70,10 +66,10 @@ class OrderStatisticsServiceTest {
         productRepository.saveAll(products);
 
 
-        Order order1 = createPaymentCompletedOrder(products, LocalDateTime.of(2023, 3, 4, 23, 59, 59));
-        Order order2 = createPaymentCompletedOrder(products, now);
-        Order order3 = createPaymentCompletedOrder(products, LocalDateTime.of(2023, 3, 5, 23, 59, 59));
-        Order order4 = createPaymentCompletedOrder(products, LocalDateTime.of(2023, 3, 6, 0, 0));
+        createPaymentCompletedOrder(products, LocalDateTime.of(2023, 3, 4, 23, 59, 59));
+        createPaymentCompletedOrder(products, now);
+        createPaymentCompletedOrder(products, LocalDateTime.of(2023, 3, 5, 23, 59, 59));
+        createPaymentCompletedOrder(products, LocalDateTime.of(2023, 3, 6, 0, 0));
 
         // stubbing -> Mock 객체에 원하는 행위를 정의하는 것
         when(mailSendClient.sendMail(any(String.class), any(String.class), any(String.class), any(String.class)))
